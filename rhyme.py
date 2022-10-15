@@ -28,7 +28,7 @@ def ai_feedback():
                       "Awesome!",
                       "Fine job.",
                       "Ah! That one.",
-                      "OK.",
+                      "Alright.",
                       "Very nice.",
                       "Superb!"]
 
@@ -49,6 +49,7 @@ def ai_comment():
                      "Did you know",
                      "An easy one",
                      "Rhymes with",
+                     "My rhyme",
                      "My word"]
  
     x = random.randint(0, len(quick_comment) - 1)
