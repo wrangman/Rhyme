@@ -11,9 +11,9 @@ def splash_screen(which):
         print("""
 ==[ WELCOME TO THE RHYMING GAME ] ===== [v.1.0.0] ==
 This is a simple game. Just type a full, valid word, 
-with one syllable, that rhymes with 'light' (but no 
-duplicates, nor names like dwight, brite, wright, or 
-leyte).
+- with one syllable - that rhymes with 'light' (but 
+no duplicates, nor names like dwight, brite, wright, 
+or leyte).
 
 You have five attempts every turn to choose a valid
 rhyme.
