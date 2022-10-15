@@ -1,3 +1,10 @@
+'''
+RHYME_FUNCTIONS.PY: Functions to main game
+
+__author__  = "Johan Wrangö"
+__version__ = "1.0.0"
+__email__   = "johan.wrango@ntig.se"
+'''
 
 def splash_screen(which):
     if which == 1:
