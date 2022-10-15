@@ -1,3 +1,11 @@
+'''
+RHYME.PY: The Rhyming Game!
+
+__author__  = "Johan Wrangö"
+__version__ = "1.0.0"
+__email__   = "johan.wrango@ntig.se"
+'''
+
 import random
 import os    
 import time
@@ -119,8 +127,8 @@ first_game = 1
 
 while True:
     os.system('cls')
-    rhymes_used = []
 
+    rhymes_used = []
     total_light_words = len(rhymes_light)
     total_words_played = 0
     turns_left = 5
@@ -129,7 +137,7 @@ while True:
 
     print(bcolors.YELLOW)
     splash_screen(first_game)
-    print(bcolors.CYAN + f"\nLet's play words that rhyme with {current_rhyme}.\nYou start. Good luck!\n")
+    print(bcolors.CYAN + f"\nLet's play words that rhyme with '{current_rhyme}.'\nYou start. Good luck!\n")
 
     while True:
         if total_words_played == total_light_words:             #No more rhymes - player loses!           
@@ -200,7 +208,6 @@ while True:
     elif game_state == 4:
         print(bcolors.FAIL + bcolors.BOLD + "I WIN - You ran out of attempts!")
         
-
     print(bcolors.YELLOW + "\nPlay again? (Y)es / (N)o ", end="")
     key_stroke = getwch().upper() 
         
