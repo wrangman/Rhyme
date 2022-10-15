@@ -2,7 +2,7 @@
 RHYME.PY: The Rhyming Game!
 
 __author__  = "Johan Wrangö"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __email__   = "johan.wrango@ntig.se"
 '''
 
@@ -14,22 +14,6 @@ from colors import bcolors
 from rhyme_functions import splash_screen
 
 
-def check_rhyme(what_rhyme, what_word):
-    if what_rhyme == "light":
-        if what_word in rhymes_used:
-            return False    #word already used - no go!
-        else:
-            return True     #Word not used - go ahead        
-    
-
-def check_validity(what_rhyme, what_word):
-    if what_rhyme == "light":
-        if what_word in rhymes_light:
-            return True    #word rhymes!
-        else:
-            return False     #Word does not rhyme
-        
-    
 def ai_feedback():
     quick_feedback = ["Good!",
                       "Nice.",
@@ -43,7 +27,7 @@ def ai_feedback():
                       "Excellent!",
                       "Awesome!",
                       "Fine job.",
-                      "Aha! That one.",
+                      "Ah! That one.",
                       "OK.",
                       "Very nice.",
                       "Superb!"]
@@ -60,6 +44,10 @@ def ai_comment():
                      "My turn",
                      "My choice",
                      "Let's try",
+                     "What about",
+                     "Here's one",
+                     "Did you know",
+                     "An easy one",
                      "Rhymes with",
                      "My word"]
  
@@ -68,63 +56,81 @@ def ai_comment():
     return quick_comment[x]
 
 
-def check_rhyme(what_rhyme, what_word):
-    if what_rhyme == "light":
-        if what_word in rhymes_used:
-            return False    #word already used - no go!
-        else:
-            return True     #Word not used - go ahead        
+def check_rhyme(what_word):
+    if what_word in rhymes_used:
+        return False    #Word already used - no go!
+    else:
+        return True     #Word not used - go ahead        
+
+
+def check_validity(what_word):
+    if what_word in rhymes_light:
+        return True      #Word rhymes!
+    else:
+        return False     #Word does not rhyme
     
 
-def check_validity(what_rhyme, what_word):
-    if what_rhyme == "light":
-        if what_word in rhymes_light:
-            return True       #word rhymes!
-        else:
-            return False     #Word does not rhyme
-        
+def play_word(word):
+    index = rhymes_light.index(word)     #Find pos of rhyme
+    rhymes_light.pop(index)              #Remove rhyme from rhyme list
+    rhymes_used.append(word)
 
-rhymes_light = ["knight",
-                "wright",
-                "bright",
-                "fright",
-                "flight",
-                "fight",
-                "night",
-                "shite",
-                "blight",
-                "right",
-                "blite",
-                "tight",
-                "sight",
-                "white",
-                "plight",
-                "slight",
-                "flite",
-                "might",
-                "height",
-                "leyte",
-                "nite",
-                "aiit",
-                "bite",
-                "kite",
-                "rite",
-                "lite",
-                "cite",
-                "spite",
-                "trite",
-                "quite",
-                "dight",
-                "bight",
-                "byte",
-                "mite",
-                "site",
-                "sleight",
-                "smite",
-                "sprite",
-                "twite",
-                "wight",
-                "write"]
+
+def get_rhymes():
+    rhymes = ["knight",
+              "wright",
+              "bright",
+              "fright",
+              "flight",
+              "fight",
+              "night",
+              "shite",
+              "blight",
+              "right",
+              "blite",
+              "tight",
+              "sight",
+              "white",
+              "plight",
+              "slight",
+              "flite",
+              "might",
+              "height",
+              "leyte",
+              "nite",
+              "aiit",
+              "bite",
+              "kite",
+              "rite",
+              "lite",
+              "cite",
+              "spite",
+              "trite",
+              "quite",
+              "dight",
+              "bight",
+              "byte",
+              "mite",
+              "site",
+              "sleight",
+              "smite",
+              "sprite",
+              "twite",
+              "wight",
+              "write"]
+    return rhymes
+
+
+def get_hint():
+    ai_hint = get_word()
+    print(bcolors.CYAN + f"Here's a hint for next time: '{ai_hint}.'")
+
+
+def get_word():
+    what_word = random.randint(0, len(rhymes_light) - 1)
+    ai_choice = rhymes_light[what_word]    
+    return ai_choice
+
 
 first_game = 1
 
@@ -132,18 +138,17 @@ while True:
     os.system('cls')
 
     rhymes_used = []
-    total_light_words = len(rhymes_light)
+    rhymes_light = get_rhymes()
     total_words_played = 0
     turns_left = 5
-    current_rhyme = "light"
     still_playing = True
 
     print(bcolors.YELLOW)
     splash_screen(first_game)
-    print(bcolors.CYAN + f"\nLet's play words that rhyme with '{current_rhyme}.'\nYou start. Good luck!\n")
+    print(bcolors.CYAN + f"\nLet's play words that rhyme with 'light.'\nYou start. Good luck!\n")
 
     while True:
-        if total_words_played == total_light_words:             #No more rhymes - tie game          
+        if not rhymes_light:                                    #No more rhymes - draw!     
             game_state = 2
             still_playing = False
             break
@@ -160,42 +165,35 @@ while True:
             entry = input(bcolors.YELLOW).lower()
             entry = entry.replace(" ", "")
             
-            if entry == "":
+            if entry == "":                                     #Player exits / gives up
                 game_state = 3
                 still_playing = False        
                 break
-            
-            if still_playing:
-                if not check_validity(current_rhyme, entry):
+        
+            if check_rhyme(entry):               #Has the rhyme been played already?
+                if not check_validity(entry):    #Is it a valid word?
                     turns_left -= 1
                     print(bcolors.FAIL + f"Sorry, that doesn't rhyme! You have: {turns_left} attempt(s) left.\n")
                     continue
-                
-                if check_rhyme(current_rhyme, entry):
+                else:                                           #Valid choice
                     turns_left = 5
-                    rhymes_used.append(entry)
+                    play_word(entry)
                     break
-                else:
-                    print(bcolors.CYAN + "The word has already been played. Try again!\n")
-                    continue
-        
-        if not still_playing: break
+            else:                                               #Word has already been played
+                turns_left -= 1
+                print(bcolors.FAIL + F"The word has already been played. You have: {turns_left} attempt(s) left.\n")
+                continue
     
-        if total_words_played == total_light_words:
+        if not still_playing: break                             #Player quit or lost
+    
+        if not rhymes_light:                                    #No more rhymes - player wins / knows more words!
             game_state = 1
             still_playing = False
             break
-        
-        while True:
-            what_word = random.randint(0, total_light_words - 1)
-            ai_choice = rhymes_light[what_word]
-            
-            if ai_choice in rhymes_used:
-                continue
-            else:
-                total_words_played += 1
-                rhymes_used.append(ai_choice)
-                break
+
+        total_words_played += 1 
+        ai_choice = get_word()
+        play_word(ai_choice)
         
         give_feedback = ai_feedback()
         give_comment = ai_comment()
@@ -208,8 +206,10 @@ while True:
         print(bcolors.CYAN + bcolors.BOLD + "IT'S A TIE - There are no more rhymes!")
     elif game_state == 3:
         print(bcolors.FAIL + bcolors.BOLD + "I WIN - You gave up!")
+        get_hint()
     elif game_state == 4:
         print(bcolors.FAIL + bcolors.BOLD + "I WIN - You ran out of attempts!")
+        get_hint()
         
     print(bcolors.YELLOW + "\nPlay again? (Y)es / (N)o ", end="")
     key_stroke = getwch().upper() 
@@ -220,5 +220,5 @@ while True:
         time.sleep(2)
         exit()
     else:
-        first_game = 2
+        first_game = 2                      # Wanna play again - show different splash screen
         continue
