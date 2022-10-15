@@ -15,8 +15,7 @@ This is a simple game. Just type a full, valid word
 - with one syllable - that rhymes with 'light' (but 
 no names like dwight or brite.)
 
-You have five attempts every turn to choose a valid
-rhyme.
+You have five attempts!
 
 - If you run out of attempts you lose
 - If you know more words than me you win! 
