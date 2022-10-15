@@ -85,6 +85,7 @@ def check_validity(what_rhyme, what_word):
         
 
 rhymes_light = ["knight",
+                "wright",
                 "bright",
                 "fright",
                 "flight",
@@ -93,17 +94,19 @@ rhymes_light = ["knight",
                 "shite",
                 "blight",
                 "right",
+                "blite",
                 "tight",
                 "sight",
                 "white",
                 "plight",
                 "slight",
+                "flite",
                 "might",
                 "height",
+                "leyte",
                 "nite",
                 "aiit",
                 "bite",
-                "pike",
                 "kite",
                 "rite",
                 "lite",
@@ -140,8 +143,8 @@ while True:
     print(bcolors.CYAN + f"\nLet's play words that rhyme with '{current_rhyme}.'\nYou start. Good luck!\n")
 
     while True:
-        if total_words_played == total_light_words:             #No more rhymes - player loses!           
-            game_state = 1
+        if total_words_played == total_light_words:             #No more rhymes - tie game          
+            game_state = 2
             still_playing = False
             break
 
@@ -179,7 +182,7 @@ while True:
         if not still_playing: break
     
         if total_words_played == total_light_words:
-            game_state = 2
+            game_state = 1
             still_playing = False
             break
         
@@ -200,9 +203,9 @@ while True:
         print(bcolors.YELLOW + f"{total_words_played}) " + bcolors.ENDC + f"{give_feedback} {give_comment}: " + bcolors.YELLOW + f"{ai_choice}\n")
 
     if game_state == 1:
-        print(bcolors.GREEN + bcolors.BOLD + "YOU WIN - I don't know any more words!")
+        print(bcolors.GREEN + bcolors.BOLD + "YOU WIN - I don't know any more rhymes!")
     elif game_state == 2:
-        print(bcolors.FAIL + bcolors.BOLD + "I WIN - There are no more rhymes!")
+        print(bcolors.CYAN + bcolors.BOLD + "IT'S A TIE - There are no more rhymes!")
     elif game_state == 3:
         print(bcolors.FAIL + bcolors.BOLD + "I WIN - You gave up!")
     elif game_state == 4:
