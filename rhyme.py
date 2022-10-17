@@ -166,6 +166,11 @@ while True:
             entry = input(bcolors.YELLOW).lower()
             entry = entry.replace(" ", "")
             
+            if entry == "idkfa":                                     #Player cheats 
+                print(bcolors.CYAN + "Cheating mode activated:")
+                entry = get_word()
+                print(rhymes_light)
+            
             if entry == "":                                     #Player exits / gives up
                 game_state = 3
                 still_playing = False        
@@ -216,7 +221,7 @@ while True:
     key_stroke = getwch().upper() 
         
     if key_stroke == "N":    
-        print(bcolors.CYAN + "\nThanks for playing!")
+        print(bcolors.CYAN + "\nSee you next time!")
         print(bcolors.ENDC)                 # Restore default system colors
         time.sleep(2)
         exit()
