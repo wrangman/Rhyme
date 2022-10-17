@@ -2,7 +2,7 @@
 RHYME.PY: The Rhyming Game!
 
 __author__  = "Johan Wrangö"
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __email__   = "johan.wrango@ntig.se"
 '''
 
@@ -166,18 +166,20 @@ while True:
             entry = input(bcolors.YELLOW).lower()
             entry = entry.replace(" ", "")
             
-            if entry == "idkfa":                                     #Player cheats 
-                print(bcolors.CYAN + "Cheating mode activated:")
-                entry = get_word()
-                print(rhymes_light)
+            if entry == "idkfa":                                #Player cheats 
+                print(bcolors.CYAN + "Cheating mode activated.")
+
+                entry = get_word()   
+                if len(rhymes_light) > 1: print(rhymes_light)
+                print(bcolors.YELLOW + f"{total_words_played}) " +  bcolors.ENDC + "Your turn: " + bcolors.YELLOW + entry)
             
             if entry == "":                                     #Player exits / gives up
                 game_state = 3
                 still_playing = False        
                 break
         
-            if check_rhyme(entry):               #Has the rhyme been played already?
-                if not check_validity(entry):    #Is it a valid word?
+            if check_rhyme(entry):                              #Has the rhyme been played already?
+                if not check_validity(entry):                   #Is it a valid word?
                     turns_left -= 1
                     print(bcolors.FAIL + f"Sorry, that doesn't rhyme! You have: {turns_left} attempt(s) left.\n")
                     continue
@@ -191,8 +193,8 @@ while True:
                 continue
     
         if not still_playing: break                             #Player quit or lost
-    
-        if not rhymes_light:                                    #No more rhymes - player wins / knows more words!
+
+        if len(rhymes_light) <= 0:                                    #No more rhymes - player wins / knows more words!
             game_state = 1
             still_playing = False
             break
