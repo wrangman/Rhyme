@@ -184,7 +184,6 @@ while True:
                     print(bcolors.FAIL + f"Sorry, that doesn't rhyme! You have: {turns_left} attempt(s) left.\n")
                     continue
                 else:                                           #Valid choice
-                    turns_left = 5
                     play_word(entry)
                     break
             else:                                               #Word has already been played
